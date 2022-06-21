@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -22,7 +23,20 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return response()->json($this->product->getAllProducts());
+        $data = [
+            'type' => 'Shoe',
+            'name' => 'Nike',
+            'price' => 1000,
+            'amount' => 2,
+            'images' => [
+                ['http://sample.com/test1'],
+                ['http://sample.com/test2'],
+                ['http://sample.com/test3'],
+                ['http://sample.com/test4'],
+            ]
+        ];
+        return response()->json($this->product->create(collect($data)));
+        // return response()->json($this->product->getAllProducts());
     }
 
     /**
@@ -41,9 +55,21 @@ class ProductController extends Controller
      * @param  \App\Http\Requests\StoreProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
-        //
+        $data = [
+            'type' => 'Shoe',
+            'name' => 'Nike',
+            'price' => 1000,
+            'amount' => 2,
+            'images' => [
+                ['http://sample.com/test1'],
+                ['http://sample.com/test2'],
+                ['http://sample.com/test3'],
+                ['http://sample.com/test4'],
+            ]
+        ];
+        return response()->json($this->product->create(collect($data)));
     }
 
     /**
