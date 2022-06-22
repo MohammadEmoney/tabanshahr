@@ -2,11 +2,12 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Models\ProductMeta;
 use App\Models\Content;
 
-class ProductRepository 
+class ProductRepository
 {
     public $product;
     public $content;
@@ -24,24 +25,14 @@ class ProductRepository
         $this->meta = $meta;
     }
 
-    public function __get($id)
+    public function getAllProducts()
     {
-        return $this->find($id);
+        return ProductResource::collection($this->product->all());
     }
 
     public function find($id)
     {
-        return $this->toArray($this->product->find($id));
-    }
-
-    protected function toArray(Product $product)
-    {
-        return [
-            'id' => $product->id,
-            'price' => $product->productMeta->where('key' , 'price')->value,
-            'amount' => $product->productMeta->where('key' , 'amount')->value,
-            'images' => $product->getProductContents(),
-        ];
+        return new ProductResource($this->product->find($id));
     }
 
     public function create($request)
@@ -53,14 +44,14 @@ class ProductRepository
         ]);
         $contentIds = $this->createContents($request['images']);
         $product->contents()->attach($contentIds, ['type' => $request['type']]);
-        return $this->toArray($product);
+        return new ProductResource($product);
     }
 
     public function createContents($urls)
     {
         $contents = [];
         foreach($urls as $url)
-            $contents[] = $this->meta->create(['url' => $url])->id;
+            $contents[] = $this->content->create(['url' => $url])->id;
         return $contents;
     }
 }

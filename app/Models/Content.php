@@ -20,12 +20,4 @@ class Content extends Model
     {
         return $this->belongsToMany(Product::class);
     }
-
-    public function getProductContents()
-    {
-        $data = [];
-        foreach($products as $product)
-            $data[] = $product->url;
-        return $data;
-    }
 }

@@ -28,4 +28,12 @@ class Product extends Model
     {
         return $this->hasMany(ProductMeta::class);
     }
+
+    public function getProductContents()
+    {
+        $data = [];
+        foreach($this->contents as $contents)
+            $data[] = $contents->url;
+        return $data;
+    }
 }

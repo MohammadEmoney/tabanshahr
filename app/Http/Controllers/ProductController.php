@@ -23,20 +23,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = [
-            'type' => 'Shoe',
-            'name' => 'Nike',
-            'price' => 1000,
-            'amount' => 2,
-            'images' => [
-                ['http://sample.com/test1'],
-                ['http://sample.com/test2'],
-                ['http://sample.com/test3'],
-                ['http://sample.com/test4'],
-            ]
-        ];
-        return response()->json($this->product->create(collect($data)));
-        // return response()->json($this->product->getAllProducts());
+        return response()->json($this->product->getAllProducts());
     }
 
     /**
@@ -63,10 +50,10 @@ class ProductController extends Controller
             'price' => 1000,
             'amount' => 2,
             'images' => [
-                ['http://sample.com/test1'],
-                ['http://sample.com/test2'],
-                ['http://sample.com/test3'],
-                ['http://sample.com/test4'],
+                'http://sample.com/test1',
+                'http://sample.com/test2',
+                'http://sample.com/test3',
+                'http://sample.com/test4',
             ]
         ];
         return response()->json($this->product->create(collect($data)));
